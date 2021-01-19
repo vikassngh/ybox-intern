@@ -27,9 +27,9 @@ export const PostsList = () => {
 
     let content;
 
-    if (this.props.isFetching) {
+    if (this.isFetching) {
         content = <div className="loader">Loading...</div>
-    } else if (this.props.fetched) {
+    } else if (this.fetched) {
         const orderedPosts = feed()
             .slice()
             .sort((a, b) => b.date.localeCompare(a.date))
@@ -37,7 +37,7 @@ export const PostsList = () => {
         content = orderedPosts.map((post) => (
             <PostExcerpt key={post.id} post={post} />
         ))
-    } else if (this.props.errorMessage) {
+    } else if (this.errorMessage) {
         content = <div>NOTHING TO SHOW</div>
     }
 
