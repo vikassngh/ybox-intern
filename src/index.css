@@ -104,6 +104,9 @@ section h1 {
 }
 
 /* Posts list */
+.posts-list{
+  flex: 1;
+}
 
 .post h2 {
   font-size: 2.5rem;

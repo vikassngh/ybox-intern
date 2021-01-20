@@ -1,32 +1,30 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { nanoid } from '@reduxjs/toolkit'
+
+import { postAdded } from './postsSlice'
 
 export const AddPostForm = () => {
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
-    const [userId, setUserId] = useState('')
-    const [addRequestStatus, setAddRequestStatus] = useState('idle')
+
+    const dispatch = useDispatch()
 
     const onTitleChanged = (e) => setTitle(e.target.value)
     const onContentChanged = (e) => setContent(e.target.value)
 
-    const canSave =
-        [title, content, userId].every(Boolean) && addRequestStatus === 'idle'
+    const onSavePostClicked = () => {
+        if (title && content) {
+            dispatch(
+                postAdded({
+                    id: nanoid(),
+                    title,
+                    content,
+                })
+            )
 
-    const onSavePostClicked = async () => {
-        if (canSave) {
-            try {
-                setAddRequestStatus('pending')
-                /*const resultAction = await dispatch(
-                    addNewPost({ title, content, user: userId })
-                )*/
-                setTitle('')
-                setContent('')
-                setUserId('')
-            } catch (err) {
-                console.error('Failed to save the post: ', err)
-            } finally {
-                setAddRequestStatus('idle')
-            }
+            setTitle('')
+            setContent('')
         }
     }
 
@@ -39,7 +37,6 @@ export const AddPostForm = () => {
                     type="text"
                     id="postTitle"
                     name="postTitle"
-                    placeholder="What's on your mind?"
                     value={title}
                     onChange={onTitleChanged}
                 />
@@ -50,7 +47,7 @@ export const AddPostForm = () => {
                     value={content}
                     onChange={onContentChanged}
                 />
-                <button type="button" onClick={onSavePostClicked} disabled={!canSave}>
+                <button type="button" onClick={onSavePostClicked}>
                     Save Post
                 </button>
             </form>

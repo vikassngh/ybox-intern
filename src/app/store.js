@@ -1,8 +1,8 @@
-import { combineReducers, applyMiddleware, createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
-import dataReducer from "../actions/Reducers";
+import blogsReducer from "../redux/reducers";
 
-const reducer = combineReducers({
-    dataReducer
-});
-export default createStore(reducer, applyMiddleware(thunk));
+export const store = createStore(
+    blogsReducer,
+    applyMiddleware(thunk)
+);

@@ -1,60 +1,20 @@
-import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { TimeAgo } from './TimeAgo'
-import {connect} from "react-redux";
-import {feed, fetchData} from "../../actions/dataActions";
-
-const PostExcerpt = ({ data }) => {
-    return (
-        <article className="post-excerpt" key={data.id}>
-            <h3>{data.title}</h3>
-            <div>
-                <TimeAgo timestamp={data.date} />
-            </div>
-            <p className="post-content">{data.content.substring(0, 100)}</p>
-
-            <Link to={`/posts/${data.id}`} className="button muted-button">
-                View Post
-            </Link>
-        </article>
-    )
-}
+import React from 'react'
+import { useSelector } from 'react-redux'
 
 export const PostsList = () => {
-    useEffect(() => {
-        fetchData();
-    }, [])
+    const posts = useSelector((state) => state.posts)
 
-    let content;
-
-    if (this.isFetching) {
-        content = <div className="loader">Loading...</div>
-    } else if (this.fetched) {
-        const orderedPosts = feed()
-            .slice()
-            .sort((a, b) => b.date.localeCompare(a.date))
-
-        content = orderedPosts.map((post) => (
-            <PostExcerpt key={post.id} post={post} />
-        ))
-    } else if (this.errorMessage) {
-        content = <div>NOTHING TO SHOW</div>
-    }
+    /*const renderedPosts = posts.map((post) => (
+        <article className="post-excerpt" key={post.id}>
+            <h3>{post.title}</h3>
+            <p className="post-content">{post.content.substring(0, 100)}</p>
+        </article>
+    ))*/
 
     return (
         <section className="posts-list">
             <h2>Posts</h2>
-            {content}
+            {/*{renderedPosts}*/}
         </section>
     )
 }
-const mapStateToProps = state => {
-    const {data, isFetching,fetched,errorMessage} = state;
-    return {
-        data,
-        fetched,
-        isFetching,
-        errorMessage
-    };
-}
-export default connect(mapStateToProps, { fetchData})(PostsList);
