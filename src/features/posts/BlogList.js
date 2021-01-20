@@ -3,35 +3,35 @@ import {Link} from "react-router-dom";
 import PropTypes from 'prop-types';
 import fetchBlogs from '../../redux/fetchBlogs';
 import {connect} from "react-redux";
-import FlatList from 'flatlist-react';
+import {Spinner} from "reactstrap";
 
 class BlogList extends React.Component{
-    renderBlogs = ({ item,idx }) => {
-        return (
-            <article className="post-excerpt" key={idx}>
-                <h3>VIkas</h3>
-                <p className="post-content">Vikas</p>
-
-                <Link to={`/posts/${idx}`} className="button muted-button">
-                    View Post
-                </Link>
-            </article>
-        )
-    }
-
     render() {
-        const {blogs} = this.props;
+        const {blogs,pending} = this.props;
         console.log(blogs);
-        return (
-            <section className="posts-list">
-                <h2>Posts</h2>
-                <FlatList
-                    list={blogs}
-                    renderItem={this.renderBlogs}
-                    renderWhenEmpty={() => <div>List is empty!</div>}
-                />
-            </section>
-        )
+        if(!pending){
+            return (
+                <section className="posts-list">
+                    <h2>Posts</h2>
+                    {blogs.blogs.map(blog =>{
+                        return(
+                            <article className="post-excerpt" key={blog.id}>
+                                <h3>{blog.title}</h3>
+                                <p className="post-content">{blog.body}</p>
+
+                                <Link to={`/posts/${blog.id}`} className="button muted-button">
+                                    View Post
+                                </Link>
+                            </article>
+                        )
+                    })}
+                </section>
+            );
+        } else {
+            return (
+                <Spinner color="primary" />
+            )
+        }
     }
 }
 BlogList.propTypes = {
@@ -39,9 +39,10 @@ BlogList.propTypes = {
 };
 
 const mapStateToProps = state => {
-    const {blogs} = state;
+    const {blogs,pending} = state;
     return {
-        blogs
+        blogs,
+        pending
     };
 }
 export default connect(mapStateToProps, {fetchBlogs})(BlogList);

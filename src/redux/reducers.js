@@ -1,7 +1,7 @@
 import {FETCH_BLOGS_PENDING, FETCH_BLOGS_SUCCESS, FETCH_BLOGS_ERROR} from './action';
 
 const initialState = {
-    pending: false,
+    pending: true,
     blogs: [],
     error: null
 }

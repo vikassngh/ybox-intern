@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from "react-redux";
 import PropTypes from 'prop-types';
+import { Spinner } from 'reactstrap';
 
 import fetchBlogs from '../../redux/fetchBlogs';
 import {getBlogsError, getBlogs, getBlogsPending} from '../../redux/reducers';
@@ -10,6 +11,8 @@ import BlogList from "./BlogList";
 class BlogsView extends React.Component {
     constructor(props) {
         super(props);
+
+        this.shouldComponentRender = this.shouldComponentRender.bind(this);
     }
 
     componentDidMount(){
@@ -17,7 +20,6 @@ class BlogsView extends React.Component {
     }
 
     shouldComponentRender() {
-        const {pending} = this.props;
         if(this.pending === false) return false;
         return true;
     }
@@ -26,7 +28,7 @@ class BlogsView extends React.Component {
         const { error } = this.props;
         let content = <BlogList/>;
 
-        // if(!this.shouldComponentRender()) return <LoadingSpinner />
+        if(!this.shouldComponentRender()) return <Spinner color="primary" />
 
         return (
             <div className='product-list-wrapper'>
