@@ -6,8 +6,9 @@ import {
   Redirect,
 } from 'react-router-dom'
 import {Navbar} from "./app/Navbar";
-import BlogsView from "./features/posts/BlogsView";
-import {AddPostForm} from "./features/posts/AddPostForm";
+import List from "./features/articles/List";
+import Form from "./features/articles/Form";
+import Post from "./features/articles/Posts";
 
 function App() {
   return (
@@ -20,19 +21,12 @@ function App() {
                 path="/"
                 render={() => (
                     <React.Fragment>
-                        <BlogsView/>
+                        <Form/>
+                        <List/>
+                        <Post/>
                     </React.Fragment>
                 )}
             />
-              <Route
-                  exact
-                  path="/AddBlogs"
-                  render={() => (
-                      <React.Fragment>
-                          <AddPostForm/>
-                      </React.Fragment>
-                  )}
-              />
             <Route exact path="/posts/:postId"/>
             <Route exact path="/editPost/:postId"  />
             <Redirect to="/" />

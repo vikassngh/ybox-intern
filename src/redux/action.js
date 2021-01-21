@@ -1,21 +1,15 @@
-export const FETCH_BLOGS_PENDING = 'FETCH_BLOGS_PENDING';
-export const FETCH_BLOGS_SUCCESS = 'FETCH_BLOGS_SUCCESS';
-export const FETCH_BLOGS_ERROR = 'FETCH_BLOGS_ERROR';
+import { ADD_ARTICLE } from "./action-type.js";
 
-export function fetchBlogsPending() {
-    return {
-        type: FETCH_BLOGS_PENDING
-    }
+export function addArticle(payload) {
+    return { type: ADD_ARTICLE, payload };
 }
 
-export const fetchBlogsSuccess = blogs => ({
-    type: FETCH_BLOGS_SUCCESS,
-    payload: { blogs }
-});
-
-export function fetchBlogsError(error) {
-    return {
-        type: FETCH_BLOGS_ERROR,
-        error: error
-    }
+export function getData() {
+    return function(dispatch) {
+        return fetch("https://jsonplaceholder.typicode.com/posts")
+            .then(response => response.json())
+            .then(json => {
+                dispatch({ type: "DATA_LOADED", payload: json });
+            });
+    };
 }
