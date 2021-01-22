@@ -4,9 +4,6 @@ import { getData } from "../../redux/action";
 import {Link} from "react-router-dom";
 
 export class Post extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     componentDidMount() {
         this.props.getData();
