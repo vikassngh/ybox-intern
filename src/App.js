@@ -9,6 +9,7 @@ import {Navbar} from "./app/Navbar";
 import List from "./features/articles/List";
 import Form from "./features/articles/Form";
 import Post from "./features/articles/Posts";
+// import {SinglePost} from "./features/articles/SinglePost";
 
 function App() {
   return (
